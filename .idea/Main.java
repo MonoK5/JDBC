@@ -13,8 +13,11 @@ public class Main {
 
         try {
             class.forName("com.mysql.cj.jdbc.Driver");
+
             connection =DriverManager.getconection(url,username, password);
             System.out.println("Connected to the database successfully");
+
+            Statement =connection.createStatement();
 
         }
     }
