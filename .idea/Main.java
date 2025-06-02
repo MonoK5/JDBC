@@ -19,6 +19,19 @@ public class Main {
 
             Statement =connection.createStatement();
 
+            String sqlQuery = "SELECT * FROM users";
+            resultSet = statement.executeQuery(sqlQuery);
+
+                    System.out.print("\nQuery Result : ");
+                    System.out.println("ID\tUsername\temail");
+                    while (resultSet.next()){
+                        int id = resultSet.getInt("id");
+                        String name = resultSet.getString("name");
+                        String email = resultSet.getString("email");
+                        System.out.println("ID\t" + id + "\t" + name + "\t" + email);
+                    }
+                    System.out.println("\nQuery Result : ");
+
         }
     }
 }
