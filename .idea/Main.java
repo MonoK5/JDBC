@@ -2,36 +2,56 @@ import java.sql.*;
 
 public class Main {
     public static void main(String[] args) {
-        String url = ;
-        String username = root;
-        String password = Letsdoit!;
+        String url = "jdbc:mysql://localhost:3306/your_database_name";
+        String username = "root";
+        String password = "Letsdoit!";
 
-        Connection conection = null;
+        Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
 
-
         try {
-            class.forName("com.mysql.cj.jdbc.Driver");
 
-            connection =DriverManager.getconection(url,username, password);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+
+            connection = DriverManager.getConnection(url, username, password);
             System.out.println("Connected to the database successfully");
 
-            Statement =connection.createStatement();
+
+            statement = connection.createStatement();
+
 
             String sqlQuery = "SELECT * FROM users";
             resultSet = statement.executeQuery(sqlQuery);
 
-                    System.out.print("\nQuery Result : ");
-                    System.out.println("ID\tUsername\temail");
-                    while (resultSet.next()){
-                        int id = resultSet.getInt("id");
-                        String name = resultSet.getString("name");
-                        String email = resultSet.getString("email");
-                        System.out.println("ID\t" + id + "\t" + name + "\t" + email);
-                    }
-                    System.out.println("\nQuery Result : ");
 
+            System.out.println("\nQuery Result:");
+            System.out.println("ID\tUsername\tEmail");
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+
+                System.out.println(id + "\t" + name + "\t" + email);
+            }
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("MySQL JDBC Driver not found.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Database connection failed.");
+            e.printStackTrace();
+        } finally {
+
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
